@@ -10,15 +10,41 @@ type UserProps = {
 
 const Table = () => {
   const [user, setUser] = useState<UserProps>([]);
-  //   const [order, setOrder] = useState(true);
   const [query, setQuery] = useState<string>("");
+  let filteredData: {
+    id: number;
+    name: string;
+    username: string;
+    phone: string;
+    website: string;
+  }[];
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
+      .then((data) => {
+        if (query.length === 0) {
+          console.log(data);
+          setUser(data);
+        } else {
+          filteredData = data.filter(
+            (person: {
+              name: string;
+              username: string;
+              website: string;
+              phone: string;
+            }) =>
+              person.name.toLowerCase().includes(query.toLowerCase()) ||
+              person.username.toLowerCase().includes(query.toLowerCase()) ||
+              person.phone.toLowerCase().includes(query.toLowerCase()) ||
+              person.website.toLowerCase().includes(query.toLowerCase())
+          );
+          setUser(filteredData);
+        }
+      });
+  }, [query]);
 
+  //   console.log(query);
   const handleSort = (order: string, field: string) => {
     console.log(order, field);
     let data: {
