@@ -12,6 +12,9 @@ type UserProps = {
 const Table = () => {
   const [user, setUser] = useState<UserProps>([]);
   const [query, setQuery] = useState<string>("");
+  const [direction, setDirection] = useState(true);
+  //false-descending true-ascending
+
   let filteredData: {
     id: number;
     name: string;
@@ -45,7 +48,6 @@ const Table = () => {
       });
   }, [query]);
 
-  //   console.log(query);
   const handleSort = (order: string, field: string) => {
     console.log(order, field);
     let data: {
@@ -103,40 +105,58 @@ const Table = () => {
 
   return (
     <>
-      <div>
-        <form
-          onSubmit={(e: React.SyntheticEvent) => {
-            e.preventDefault();
-            const target = e.target as typeof e.target & {
-              order: { value: string };
-              field: { value: string };
-            };
-            const order = target.order.value;
-            const field = target.field.value;
-            handleSort(order, field);
-          }}
-        >
-          <select name="order" id="order">
-            <option value="ascending">ASC</option>
-            <option value="descending">DESC</option>
-          </select>
-          <select name="field" id="field">
-            <option value="name">Name</option>
-            <option value="username">Username</option>
-            <option value="phone">Phone</option>
-          </select>
-          <br />
-          <button className="border rounded bg-red-600 p-2">Submit</button>
-        </form>
+      <div className="flex justify-center mt-8">
+        <div className="mr-5">
+          <form
+            onSubmit={(e: React.SyntheticEvent) => {
+              e.preventDefault();
+              const target = e.target as typeof e.target & {
+                order: { value: string };
+                field: { value: string };
+              };
+              const order = target.order.value;
+              const field = target.field.value;
+              handleSort(order, field);
+            }}
+          >
+            <div className="flex">
+              <select
+                className="select select-error max-w-xs mr-2"
+                name="order"
+                id="order"
+              >
+                <option disabled selected>
+                  Order
+                </option>
+                <option value="ascending">ASC</option>
+                <option value="descending">DESC</option>
+              </select>
+              <select
+                className="select select-error max-w-xs mr-2"
+                name="field"
+                id="field"
+              >
+                <option disabled selected>
+                  Field
+                </option>
+                <option value="name">Name</option>
+                <option value="username">Username</option>
+                <option value="phone">Phone</option>
+              </select>
+              <button className="btn  btn-active btn-accent ">Sort</button>
+            </div>
+          </form>
+        </div>
+        <div>
+          <input
+            type="text"
+            placeholder="Search..."
+            className="search input input-bordered input-error w-full max-w-xs"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
       </div>
-      <div>
-        <input
-          type="text"
-          placeholder="Search..."
-          className="search"
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
+
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           <thead>
