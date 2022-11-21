@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+import { UserEntity } from "./../entities";
+
 type UserProps = {
   id: number;
   name: string;
@@ -59,74 +60,38 @@ const Table = () => {
 
     if (order === "descending") {
       if (field === "name") {
-        let descendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data.sort((p1, p2) =>
+        let descendingData: UserEntity[] = data.sort((p1, p2) =>
           p1.name < p2.name ? 1 : p1.name > p2.name ? -1 : 0
         );
         setUser(descendingData);
       } else if (field === "username") {
-        let descendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data.sort((p1, p2) =>
+        let descendingData: UserEntity[] = data.sort((p1, p2) =>
           p1.name < p2.username ? 1 : p1.username > p2.username ? -1 : 0
         );
         setUser(descendingData);
       } else {
-        let descendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data.sort((p1, p2) =>
+        let descendingData: UserEntity[] = data.sort((p1, p2) =>
           p1.name < p2.phone ? 1 : p1.phone > p2.phone ? -1 : 0
         );
         setUser(descendingData);
       }
     } else {
       if (field === "name") {
-        let ascendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data
+        let ascendingData: UserEntity[] = data
           .sort((p1, p2) =>
             p1.name < p2.name ? 1 : p1.name > p2.name ? -1 : 0
           )
           .reverse();
         setUser(ascendingData);
       } else if (field === "username") {
-        let ascendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data
+        let ascendingData: UserEntity[] = data
           .sort((p1, p2) =>
             p1.name < p2.name ? 1 : p1.username > p2.username ? -1 : 0
           )
           .reverse();
         setUser(ascendingData);
       } else {
-        let ascendingData: {
-          id: number;
-          name: string;
-          username: string;
-          phone: string;
-          website: string;
-        }[] = data
+        let ascendingData: UserEntity[] = data
           .sort((p1, p2) =>
             p1.name < p2.name ? 1 : p1.phone > p2.phone ? -1 : 0
           )
